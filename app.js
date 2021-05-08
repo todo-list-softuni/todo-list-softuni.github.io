@@ -11,7 +11,7 @@ const mainTemplate = (data, startArticle, deleteArticle, finishArticle) => html`
 <div class="wrapper">
     <section>
         <div>
-            <h1 class="gray">Add Task</h1>
+            <h1 class="blue">Add Task</h1>
         </div>
         <div>
             <form @submit=${addTask} action="">
