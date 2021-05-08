@@ -82,7 +82,7 @@ const openTaskTemplate = (task, startArticle, deleteArticle) => html`
     <p>Description: ${task.description}</p>
     <p>Due Date: ${task.date}</p>
     <div class="flex">
-        <button id=${task.objectId} @click=${()=> startArticle(task.objectId)} class="green">Start</button>
+        <button id=${task.objectId} @click=${()=> startArticle(task.objectId)} class="green">Start</button> 
         <button id=${task.objectId} @click=${() => deleteArticle(task.objectId)} class="red">Delete</button>
     </div>
 </article>`;
@@ -262,7 +262,7 @@ function setThemeBlack() {
 
 function setThemeWhite() {
     document.querySelector('html').style.background = 'white';
-    document.querySelector('div.wrapper').style.background = '#4b86c5';
+    document.querySelector('div.wrapper').style.background = '#d9dbde';
     document.querySelector('form').style.border = "2px solid black";
     document.querySelector('form').style.background = 'radial-gradient(white, transparent)';
     document.querySelectorAll('h3, p, label').forEach(x => x.style.color = 'black');

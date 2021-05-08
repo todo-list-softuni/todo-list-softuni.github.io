@@ -124,7 +124,7 @@ form button {
   margin: 2rem auto 0;
   border-radius: 5px;
   width: 90%;
-  background-color: #4b86c5;
+  background-color: #d9dbde;
 }
 
 .gray {
@@ -133,25 +133,30 @@ form button {
 
 .orange {
   background-color: #ff9f1a;
+  font-family: Papyrus;
 }
 
 .yellow {
   background-color: #ffd500;
+  font-family: Papyrus;
 }
 
 .green {
   background-color: #8acc47;
   color: white;
+  font-family: Papyrus;
 }
 
 .red {
   background-color: #d93651;
   color: white;
+  font-family: Papyrus;
 }
 
 .blue {
   background-color: #0000ff;
   color: white;
+  font-family: Papyrus;
 }
 
 .flex {
@@ -198,10 +203,12 @@ button.change-theme {
   border: 0;
   margin: auto;
   margin-left: 20px;
+  font-family: Papyrus;
 }
 
 button.change-theme:hover {
     background-color:red;
     border: 3px dotted yellow;
     color:yellow;
+    font-family: Papyrus;
 }
