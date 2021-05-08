@@ -125,7 +125,7 @@ form button {
   border-radius: 5px;
   width: 90%;
   background-color: #d9dbde; /*changed*/
-  max-height: 1000px;
+  max-height: 1200px;
 }
 .footer {
   font-weight: bold;
@@ -237,6 +237,18 @@ button.change-theme:hover {
 }
 
 #completed {
-  max-height: 90%;
+  max-height: 94%;
+  overflow: auto;
+}
+#open {
+  max-height: 94%;
+  overflow: auto;
+}
+#inProgress {
+  max-height: 94%;
+  overflow: auto;
+}
+#deleted {
+  max-height: 94%;
   overflow: auto;
 }
