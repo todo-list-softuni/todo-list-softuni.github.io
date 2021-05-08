@@ -114,7 +114,7 @@ button {
 form button {
   display: block;
   margin-left: auto;
-  background-color: #8f7ee6;
+  background-color: #0000ff; /*changed by #8f7ee6 to #0000ff aka .blue*/
   color: white;
 }
 
@@ -124,7 +124,7 @@ form button {
   margin: 2rem auto 0;
   border-radius: 5px;
   width: 90%;
-  background-color: #d9dbde;
+  background-color: #d9dbde; /*changed*/
 }
 
 .gray {
@@ -133,28 +133,34 @@ form button {
 
 .orange {
   background-color: #ff9f1a;
-  font-family: Papyrus;
+  font-family: Papyrus; /*without*/
 }
 
 .yellow {
   background-color: #ffd500;
-  font-family: Papyrus;
+  font-family: Papyrus; /*without*/
 }
 
 .green {
   background-color: #8acc47;
   color: white;
-  font-family: Papyrus;
+  font-family: Papyrus; /*without*/
 }
 
 .red {
   background-color: #d93651;
   color: white;
-  font-family: Papyrus;
+  font-family: Papyrus; /*without*/
 }
 
 .blue {
   background-color: #0000ff;
+  color: white;
+  font-family: Papyrus; /*without*/
+}
+/*new*/
+.purple{
+  background-color: #8f7ee6;
   color: white;
   font-family: Papyrus;
 }
