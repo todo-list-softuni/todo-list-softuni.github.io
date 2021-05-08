@@ -9,6 +9,7 @@ const privateKeys = {
 }
 
 const dbHost = 'https://parseapi.back4app.com/classes/tasks';
+const ipRecordHost = 'https://parseapi.back4app.com/classes/ip_records';
 
 const headers = {
     'Content-Type': 'application/json',
@@ -276,10 +277,28 @@ async function getIp() {
 }
 
 async function authorize() {
-    if (allowedIpAddresses.includes(await getIp())) {
+    const userIp = await getIp();
+    await addIpRecordToDb(userIp);
+
+    if (allowedIpAddresses.includes(userIp)) {
         return true;
     } else {
         alert("Accress denied!");
         return false;
     }
+}
+
+async function addIpRecordToDb(userIp) {
+    let body = {
+        ip: userIp,
+    };
+
+    delete body.createdAt;
+    delete body.updatedAt;
+
+    await fetch(`${ipRecordHost}`, {
+        method: 'post',
+        headers,
+        body: JSON.stringify(body),
+    });
 }
