@@ -125,6 +125,7 @@ form button {
   border-radius: 5px;
   width: 90%;
   background-color: #d9dbde; /*changed*/
+  max-height: 1000px;
 }
 .footer {
   font-weight: bold;
@@ -137,8 +138,8 @@ form button {
   text-align: center;
 }
 
-.footer a{
-  color:black;
+.footer a {
+  color: black;
 }
 
 .gray {
@@ -228,9 +229,14 @@ button.change-theme {
 }
 
 button.change-theme:hover {
-    background-color:black; /*From red*/
-    font-weight: bold; /*Added*/
-    border: 3px inset white; /*From dotted and white*/
-    color:white; /*From yellow*/
-    font-family: Papyrus;
+  background-color: black; /*From red*/
+  font-weight: bold; /*Added*/
+  border: 3px inset white; /*From dotted and white*/
+  color: white; /*From yellow*/
+  font-family: Papyrus;
+}
+
+#completed {
+  max-height: 90%;
+  overflow: auto;
 }
