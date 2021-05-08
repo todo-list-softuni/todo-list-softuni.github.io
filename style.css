@@ -205,17 +205,18 @@ footer {
 }
 
 button.change-theme {
-  width: 90%;
+  width: 85%; /*From 90%*/
   font-weight: bold;
-  border: 0;
+  border: 2px solid black; /*From 0*/
   margin: auto;
   margin-left: 20px;
   font-family: Papyrus;
 }
 
 button.change-theme:hover {
-    background-color:red;
-    border: 3px dotted yellow;
-    color:yellow;
+    background-color:black; /*From red*/
+    font-weight: bold; /*Added*/
+    border: 3px inset white; /*From dotted and white*/
+    color:white; /*From yellow*/
     font-family: Papyrus;
 }
