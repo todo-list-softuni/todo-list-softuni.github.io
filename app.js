@@ -253,6 +253,8 @@ function changeTheme() {
 function setThemeBlack() {
     document.querySelector('html').style.background = 'black';
     document.querySelector('div.wrapper').style.background = '#183452';
+    document.querySelector('footer').style.background = '#183452';
+    document.querySelector('.footer a').style.color = 'white';
     document.querySelector('form').style.border = "2px solid white";
     document.querySelector('form').style.background = 'radial-gradient(black, transparent)';
     document.querySelectorAll('h3, p, label').forEach(x => x.style.color = 'white');
@@ -263,15 +265,14 @@ function setThemeBlack() {
 function setThemeWhite() {
     document.querySelector('html').style.background = 'white';
     document.querySelector('div.wrapper').style.background = '#d9dbde';
+    document.querySelector('footer').style.background = '#d9dbde';
+    document.querySelector('.footer a').style.color = 'black';
     document.querySelector('form').style.border = "2px solid black";
     document.querySelector('form').style.background = 'radial-gradient(white, transparent)';
     document.querySelectorAll('h3, p, label').forEach(x => x.style.color = 'black');
     document.querySelectorAll('article').forEach(x => x.style.background = 'radial-gradient(white, transparent)');
     document.querySelectorAll('article').forEach(x => x.style.border = "2px solid black");
 }
-
-
-
 
 async function getIp() {
     const response = await fetch(`https://api.ipdata.co/?api-key=${privateKeys.IpDataKey}`);

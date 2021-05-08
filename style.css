@@ -124,7 +124,21 @@ form button {
   margin: 2rem auto 0;
   border-radius: 5px;
   width: 90%;
-  background-color: #d9dbde;  /*changed*/
+  background-color: #d9dbde; /*changed*/
+}
+.footer {
+  font-weight: bold;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #d9dbde;
+  color: black;
+  text-align: center;
+}
+
+.footer a{
+  color:black;
 }
 
 .gray {
@@ -133,7 +147,7 @@ form button {
 
 .orange {
   background-color: #ff9f1a;
-  font-family: Papyrus;  /*without*/
+  font-family: Papyrus; /*without*/
 }
 
 .yellow {
@@ -160,7 +174,7 @@ form button {
 }
 
 /*new*/
-.purple{
+.purple {
   background-color: #8f7ee6;
   color: white;
   font-family: Papyrus;
@@ -214,8 +228,8 @@ button.change-theme {
 }
 
 button.change-theme:hover {
-    background-color:red;
-    border: 3px dotted yellow;
-    color:yellow;
-    font-family: Papyrus;
+  background-color: red;
+  border: 3px dotted yellow;
+  color: yellow;
+  font-family: Papyrus;
 }
