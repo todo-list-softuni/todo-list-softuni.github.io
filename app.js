@@ -5,6 +5,14 @@ const privateKeys = {
     RESTKey: 'LzdgF3zjzHLJZlfQmjx60yebSH1Q8ZmhcgoGOXMD',
 }
 
+const dbHost = 'https://parseapi.back4app.com/classes/tasks';
+
+const headers = {
+    'Content-Type': 'application/json',
+    'X-Parse-Application-Id': privateKeys.ApplicationId,
+    'X-Parse-REST-API-Key': privateKeys.RESTKey,
+}
+
 //creating templates
 const mainTemplate = (data, startArticle, deleteArticle, finishArticle) => html`
     <div id="loader"></div>
@@ -130,10 +138,12 @@ async function startArticle(id) {
     let task = await getTaskById(id);
     await updateTaskToInProgress(task)
 }
+
 async function deleteArticle(id) {
     let task = await getTaskById(id);
     await updateTaskToDeleted(task)
 }
+
 async function finishArticle(id) {
     let task = await getTaskById(id);
     await updateTaskToFinished(task)
@@ -151,85 +161,70 @@ async function loadTasks(startArticle, deleteArticle, finishArticle) {
 
 //server requests
 async function getTasksFromServer() {
-    const response = await fetch('https://parseapi.back4app.com/classes/tasks', {
+    const response = await fetch(dbHost, {
         method: 'get',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-Parse-Application-Id': privateKeys.ApplicationId,
-            'X-Parse-REST-API-Key': privateKeys.RESTKey,
-        }
+        headers,
     })
 
     const data = await response.json();
     return data;
 }
+
 async function getTaskById(id) {
-    const response = await fetch('https://parseapi.back4app.com/classes/tasks/' + id, {
+    const response = await fetch(`${dbHost}/${id}`, {
         method: 'get',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-Parse-Application-Id': privateKeys.ApplicationId,
-            'X-Parse-REST-API-Key': privateKeys.RESTKey,
-        }
+        headers,
     })
 
     const data = await response.json();
     return data;
 }
+
 async function postTaskToServer(body) {
-    const response = await fetch('https://parseapi.back4app.com/classes/tasks', {
+    await fetch(dbHost, {
         method: 'post',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-Parse-Application-Id': privateKeys.ApplicationId,
-            'X-Parse-REST-API-Key': privateKeys.RESTKey,
-        },
+        headers,
         body: JSON.stringify(body)
     });
 }
+
 //updating in server
 async function updateTaskToInProgress(body) {
     body.status = 'inProgress';
     delete body.createdAt;
     delete body.updatedAt;
-    const response = await fetch('https://parseapi.back4app.com/classes/tasks/' + body.objectId, {
+    
+    await fetch(`${dbHost}/${body.objectId}`, {
         method: 'put',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-Parse-Application-Id': privateKeys.ApplicationId,
-            'X-Parse-REST-API-Key': privateKeys.RESTKey,
-        },
+        headers,
         body: JSON.stringify(body),
     });
+
     await loadTasks(startArticle, deleteArticle, finishArticle);
 }
+
 async function updateTaskToDeleted(body) {
     body.status = 'deleted';
     delete body.createdAt;
     delete body.updatedAt;
-    const response = await fetch('https://parseapi.back4app.com/classes/tasks/' + body.objectId, {
+    await fetch(`${dbHost}/${body.objectId}`, {
         method: 'put',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-Parse-Application-Id': privateKeys.ApplicationId,
-            'X-Parse-REST-API-Key': privateKeys.RESTKey,
-        },
+        headers,
         body: JSON.stringify(body),
     });
+
     await loadTasks(startArticle, deleteArticle, finishArticle);
 }
 async function updateTaskToFinished(body) {
     body.status = 'finished';
     delete body.createdAt;
     delete body.updatedAt;
-    const response = await fetch('https://parseapi.back4app.com/classes/tasks/' + body.objectId, {
+
+    await fetch(`${dbHost}/${body.objectId}`, {
         method: 'put',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-Parse-Application-Id': privateKeys.ApplicationId,
-            'X-Parse-REST-API-Key': privateKeys.RESTKey,
-        },
+        headers,
         body: JSON.stringify(body),
     });
+
     await loadTasks(startArticle, deleteArticle, finishArticle);
 }
