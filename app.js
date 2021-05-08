@@ -1,8 +1,11 @@
 import { html, render } from 'https://unpkg.com/lit-html?module'
 
+const allowedIpAddresses = ["193.68.17.109", "84.238.154.6", "89.215.236.171"];
+
 const privateKeys = {
     ApplicationId: 'TaBgbSxM35ip2IsCb9GmD4USsmJ3cmvC2gzry9FS',
     RESTKey: 'LzdgF3zjzHLJZlfQmjx60yebSH1Q8ZmhcgoGOXMD',
+    IpDataKey: '20426234f75dd6aeafcc498fa3839229dfc9ed6953f42aedb4fcfb41',
 }
 
 const dbHost = 'https://parseapi.back4app.com/classes/tasks';
@@ -51,7 +54,7 @@ const mainTemplate = (data, startArticle, deleteArticle, finishArticle, changeTh
             </div>
             <div id="inProgress">
                 ${data.filter(x => x.status == 'inProgress').map((x) =>
-     inProgressTaskTemplate(x, deleteArticle, finishArticle))}
+               inProgressTaskTemplate(x, deleteArticle, finishArticle))}
             </div>
         </section>
         <section>
@@ -78,8 +81,8 @@ const openTaskTemplate = (task, startArticle, deleteArticle) => html`
     <p>Description: ${task.description}</p>
     <p>Due Date: ${task.date}</p>
     <div class="flex">
-        <button id=${task.objectId} @click=${() => startArticle(task.objectId)} class="green">Start</button>
-        <button id=${task.objectId} @click=${()=> deleteArticle(task.objectId)} class="red">Delete</button>
+        <button id=${task.objectId} @click=${()=> startArticle(task.objectId)} class="green">Start</button>
+        <button id=${task.objectId} @click=${() => deleteArticle(task.objectId)} class="red">Delete</button>
     </div>
 </article>`;
 
@@ -89,8 +92,8 @@ const inProgressTaskTemplate = (task, deleteArticle, finishArticle) => html`
     <p>Description: ${task.description}</p>
     <p>Due Date: ${task.date}</p>
     <div class="flex">
-        <button id=${task.objectId} @click=${()=> deleteArticle(task.objectId)} class="red">Delete</button>
-        <button id=${task.objectId} @click=${()=> finishArticle(task.objectId)} class="orange">Finish</button>
+        <button id=${task.objectId} @click=${() => deleteArticle(task.objectId)} class="red">Delete</button>
+        <button id=${task.objectId} @click=${() => finishArticle(task.objectId)} class="orange">Finish</button>
     </div>
 </article>`;
 
@@ -100,7 +103,7 @@ const finishedTaskTemplate = (task, deleteArticle) => html`
     <p>Description: ${task.description}</p>
     <p>Due Date: ${task.date}</p>
     <div class="flex">
-        <button id=${task.objectId} @click=${()=> deleteArticle(task.objectId)} class="red">Delete</button>
+        <button id=${task.objectId} @click=${() => deleteArticle(task.objectId)} class="red">Delete</button>
     </div>
 </article>`;
 
@@ -134,22 +137,31 @@ async function addTask(e) {
         description: description,
         status: 'open'
     }
-    await postTaskToServer(task);
-    await loadTasks(startArticle, deleteArticle, finishArticle);
+
+    if (authorize()) {
+        await postTaskToServer(task);
+        await loadTasks(startArticle, deleteArticle, finishArticle);
+    }
 }
 async function startArticle(id) {
-    let task = await getTaskById(id);
-    await updateTaskToInProgress(task)
+    if (authorize()) {
+        let task = await getTaskById(id);
+        await updateTaskToInProgress(task);
+    }
 }
 
 async function deleteArticle(id) {
-    let task = await getTaskById(id);
-    await updateTaskToDeleted(task)
+    if (authorize()) {
+        let task = await getTaskById(id);
+        await updateTaskToDeleted(task);
+    }
 }
 
 async function finishArticle(id) {
-    let task = await getTaskById(id);
-    await updateTaskToFinished(task)
+    if (authorize()) {
+        let task = await getTaskById(id);
+        await updateTaskToFinished(task);
+    }
 }
 
 //loading tasks
@@ -218,6 +230,7 @@ async function updateTaskToDeleted(body) {
 
     await loadTasks(startArticle, deleteArticle, finishArticle);
 }
+
 async function updateTaskToFinished(body) {
     body.status = 'finished';
     delete body.createdAt;
@@ -233,29 +246,40 @@ async function updateTaskToFinished(body) {
 }
 
 function changeTheme() {
-    document.querySelector('html').style.background == 'black' ? setThemeWhite() : setThemeBlack(); 
+    document.querySelector('html').style.background == 'black' ? setThemeWhite() : setThemeBlack();
 }
 
-function setThemeBlack(){
+function setThemeBlack() {
     document.querySelector('html').style.background = 'black';
     document.querySelector('div.wrapper').style.background = '#183452';
     document.querySelector('form').style.border = "2px solid white";
     document.querySelector('form').style.background = 'radial-gradient(black, transparent)';
-    document.querySelectorAll('h3').forEach(x=>x.style.color = 'white');
-    document.querySelectorAll('p').forEach(x=>x.style.color = 'white');
-    document.querySelectorAll('label').forEach(x=>x.style.color = 'white');
-    document.querySelectorAll('article').forEach(x=>x.style.background = 'radial-gradient(black, transparent)');
-    document.querySelectorAll('article').forEach(x=>x.style.border = "2px solid white");
+    document.querySelectorAll('h3, p, label').forEach(x => x.style.color = 'white');
+    document.querySelectorAll('article').forEach(x => x.style.background = 'radial-gradient(black, transparent)');
+    document.querySelectorAll('article').forEach(x => x.style.border = "2px solid white");
 }
 
-function setThemeWhite(){
+function setThemeWhite() {
     document.querySelector('html').style.background = 'white';
     document.querySelector('div.wrapper').style.background = '#4b86c5';
     document.querySelector('form').style.border = "2px solid black";
     document.querySelector('form').style.background = 'radial-gradient(white, transparent)';
-    document.querySelectorAll('h3').forEach(x=>x.style.color = 'black');
-    document.querySelectorAll('p').forEach(x=>x.style.color = 'black');
-    document.querySelectorAll('label').forEach(x=>x.style.color = 'black');
-    document.querySelectorAll('article').forEach(x=>x.style.background = 'radial-gradient(white, transparent)');
-    document.querySelectorAll('article').forEach(x=>x.style.border = "2px solid black");
+    document.querySelectorAll('h3, p, label').forEach(x => x.style.color = 'black');
+    document.querySelectorAll('article').forEach(x => x.style.background = 'radial-gradient(white, transparent)');
+    document.querySelectorAll('article').forEach(x => x.style.border = "2px solid black");
+}
+
+async function getIp() {
+    const response = await fetch(`https://api.ipdata.co/?api-key=${privateKeys.IpDataKey}`);
+    const data = await response.json();
+    return data.ip;
+}
+
+async function authorize() {
+    if (allowedIpAddresses.includes(await getIp())) {
+        return true;
+    } else {
+        alert("Accress denied!");
+        return false;
+    }
 }
