@@ -124,7 +124,7 @@ form button {
   margin: 2rem auto 0;
   border-radius: 5px;
   width: 90%;
-  background-color: #d9dbde; /*changed*/
+  background-color: #d9dbde;  /*changed*/
 }
 
 .gray {
@@ -133,7 +133,7 @@ form button {
 
 .orange {
   background-color: #ff9f1a;
-  font-family: Papyrus; /*without*/
+  font-family: Papyrus;  /*without*/
 }
 
 .yellow {
@@ -158,6 +158,7 @@ form button {
   color: white;
   font-family: Papyrus; /*without*/
 }
+
 /*new*/
 .purple{
   background-color: #8f7ee6;
