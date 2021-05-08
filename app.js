@@ -270,6 +270,9 @@ function setThemeWhite() {
     document.querySelectorAll('article').forEach(x => x.style.border = "2px solid black");
 }
 
+
+
+
 async function getIp() {
     const response = await fetch(`https://api.ipdata.co/?api-key=${privateKeys.IpDataKey}`);
     const data = await response.json();

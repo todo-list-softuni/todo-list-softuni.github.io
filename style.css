@@ -81,17 +81,17 @@ article {
   border: 1px solid black;
   border-radius: 5px;
   /* min-height: 10%; */
-  background-color: aliceblue;
+  background: radial-gradient(white, transparent); /*background-color:*/
   font-size: 1.2em;
 }
 
 form {
-  margin: 5px;
+  margin: 15px;
   padding: 10px;
-  border: 1px solid black;
+  border: 2px solid black;
   border-radius: 5px;
   min-height: 10%;
-  background-color: aliceblue;
+  background: radial-gradient(white, transparent); /*background-color:*/
   font-size: 0.75em;
 }
 
