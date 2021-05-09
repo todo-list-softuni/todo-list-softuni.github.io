@@ -31,28 +31,28 @@ export async function addTask(e) {
         status: 'open'
     }
 
-    if (authorize()) {
+    if (await authorize()) {
         await postTaskToServer(task);
         await loadTasks(startArticle, deleteArticle, finishArticle);
     }
 }
 
 export async function startArticle(id) {
-    if (authorize()) {
+    if (await authorize()) {
         let task = await getTaskById(id);
         await updateTaskToInProgress(task);
     }
 }
 
 export async function deleteArticle(id) {
-    if (authorize()) {
+    if (await authorize()) {
         let task = await getTaskById(id);
         await updateTaskToDeleted(task);
     }
 }
 
 export async function finishArticle(id) {
-    if (authorize()) {
+    if (await authorize()) {
         let task = await getTaskById(id);
         await updateTaskToFinished(task);
     }
