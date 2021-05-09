@@ -11,7 +11,6 @@ const headers = {
 
 //Start of App
 await loadTasks(startArticle, deleteArticle, finishArticle);
-updateThemeOnStartup();
 
 //task operations
 export async function addTask(e) {
@@ -67,6 +66,8 @@ async function loadTasks(startArticle, deleteArticle, finishArticle) {
     const data = await getTasksFromServer();
     let tasksArray = Object.values(data)[0];
     render(templates.mainTemplate(tasksArray, startArticle, deleteArticle, finishArticle, changeTheme), main)
+
+    updateThemeFromCookie();
 }
 
 //#region server requests
@@ -198,7 +199,7 @@ function setCookie(value){
     document.cookie = `theme=${value};expires=` + now.toUTCString() + ';path=/';
 }
 
-function updateThemeOnStartup() {
+function updateThemeFromCookie() {
     getCookieValue() == 'black' ? setThemeBlack() : setThemeWhite();
 }
 //#endregion
