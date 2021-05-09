@@ -185,9 +185,9 @@ form button {
 
 .loader {
   border-top: 16px solid black;
-  border-right: 16px solid red;
+  border-right: 16px solid #0000ff;
   border-bottom: 16px solid black;
-  border-left: 16px solid red;
+  border-left: 16px solid #0000ff;
   border-radius: 50%;
   width: 120px;
   height: 120px;

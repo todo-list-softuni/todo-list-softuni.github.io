@@ -208,8 +208,10 @@ function updateThemeFromCookie() {
 //Get Ip from ipdata
 async function getIp() {
     const response = await fetch(`https://api.ipdata.co/?api-key=${privateKeys.IpDataKey}`);
+    
     const data = await response.json();
     return data.ip;
+    
 }
 
 //Authorization with allowed IPs
