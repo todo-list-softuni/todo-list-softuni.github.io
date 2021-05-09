@@ -178,8 +178,6 @@ form button {
   font-family: Papyrus;
 }
 
-
-
 .flex {
   display: flex;
   justify-content: space-between;
@@ -231,6 +229,10 @@ section div:nth-child(even) {
   max-height: 90%;
   overflow: auto;
   margin: 2.7%;
+}
+
+i {
+  padding: 5px;
 }
 
 @keyframes spin {
