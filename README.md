@@ -34,6 +34,7 @@ const privateKeys = {
 
 ### Credits
 Graphics help from [RedX4444](https://github.com/RedX4444)
+
 Initial HTML & CSS is from www.softuni.bg
 
 Hosting for my TODO-List @ SoftUni
