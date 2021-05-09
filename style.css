@@ -124,7 +124,7 @@ form button {
   border-radius: 5px;
   width: 90%;
   background-color: #d9dbde;
-  max-height:50rem;
+  max-height: 50rem;
 }
 .footer {
   font-weight: bold;
@@ -152,12 +152,12 @@ form button {
 
 .yellow {
   background-color: #ffd500;
-  font-family: Papyrus; 
+  font-family: Papyrus;
 }
 .green {
   background-color: #8acc47;
   color: white;
-  font-family: Papyrus; 
+  font-family: Papyrus;
 }
 
 .red {
@@ -169,7 +169,7 @@ form button {
 .blue {
   background-color: #0000ff;
   color: white;
-  font-family: Papyrus; 
+  font-family: Papyrus;
 }
 
 .purple {
@@ -197,15 +197,6 @@ form button {
   top: 20%;
 }
 
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
 footer {
   justify-content: center;
   text-align: center;
@@ -228,13 +219,35 @@ button.change-theme {
 button.change-theme:hover {
   background-color: black;
   font-weight: bold;
-  border: 3px inset white; 
-  color: white; 
+  border: 3px inset white;
+  color: white;
   font-family: Papyrus;
+  animation: shake 150ms 2 linear;
 }
 
 section div:nth-child(even) {
   max-height: 90%;
   overflow: auto;
-  margin:2.7%;
+  margin: 2.7%;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes shake {
+  0% {
+    transform: translate(3px, 0);
+  }
+  50% {
+    transform: translate(-3px, 0);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
 }
