@@ -156,7 +156,7 @@ export function changeTheme() {
 }
 
 function setThemeBlack() {
-    document.cookie = "theme=black";
+    setCookie('black');
 
     document.querySelector('html').style.background = 'black';
     document.querySelector('div.wrapper').style.background = '#183452';
@@ -170,7 +170,7 @@ function setThemeBlack() {
 }
 
 function setThemeWhite() {
-    document.cookie = "theme=white";
+    setCookie('white');
 
     document.querySelector('html').style.background = 'white';
     document.querySelector('div.wrapper').style.background = '#d9dbde';
@@ -188,6 +188,14 @@ function getCookieValue() {
         .split('; ')
         .find(row => row.startsWith('theme='))
         .split('=')[1];
+}
+
+function setCookie(value){
+    var now = new Date();
+    var time = now.getTime();
+    var expireTime = time + 1000 * 36000 * 36000; //Set cookie to never expire
+    now.setTime(expireTime);
+    document.cookie = `theme=${value};expires=` + now.toUTCString() + ';path=/';
 }
 
 function updateThemeOnStartup() {
