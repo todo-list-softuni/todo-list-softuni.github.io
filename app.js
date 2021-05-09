@@ -10,7 +10,8 @@ const headers = {
 }
 
 //Start of App
-loadTasks(startArticle, deleteArticle, finishArticle);
+await loadTasks(startArticle, deleteArticle, finishArticle);
+updateThemeOnStartup();
 
 //task operations
 export async function addTask(e) {
@@ -155,6 +156,8 @@ export function changeTheme() {
 }
 
 function setThemeBlack() {
+    document.cookie = "theme=black";
+
     document.querySelector('html').style.background = 'black';
     document.querySelector('div.wrapper').style.background = '#183452';
     document.querySelector('footer').style.background = '#183452';
@@ -167,6 +170,8 @@ function setThemeBlack() {
 }
 
 function setThemeWhite() {
+    document.cookie = "theme=white";
+
     document.querySelector('html').style.background = 'white';
     document.querySelector('div.wrapper').style.background = '#d9dbde';
     document.querySelector('footer').style.background = '#d9dbde';
@@ -176,6 +181,17 @@ function setThemeWhite() {
     document.querySelectorAll('h3, p, label').forEach(x => x.style.color = 'black');
     document.querySelectorAll('article').forEach(x => x.style.background = 'radial-gradient(white, transparent)');
     document.querySelectorAll('article').forEach(x => x.style.border = "2px solid black");
+}
+
+function getCookieValue() {
+    return document.cookie
+        .split('; ')
+        .find(row => row.startsWith('theme='))
+        .split('=')[1];
+}
+
+function updateThemeOnStartup() {
+    getCookieValue() == 'black' ? setThemeBlack() : setThemeWhite();
 }
 //#endregion
 
