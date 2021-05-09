@@ -80,8 +80,7 @@ article {
   padding: 5px;
   border: 1px solid black;
   border-radius: 5px;
-  /* min-height: 10%; */
-  background: radial-gradient(white, transparent); /*background-color:*/
+  background: radial-gradient(white, transparent);
   font-size: 1.2em;
 }
 
@@ -91,7 +90,7 @@ form {
   border: 2px solid black;
   border-radius: 5px;
   min-height: 10%;
-  background: radial-gradient(white, transparent); /*background-color:*/
+  background: radial-gradient(white, transparent);
   font-size: 0.75em;
 }
 
@@ -114,7 +113,7 @@ button {
 form button {
   display: block;
   margin-left: auto;
-  background-color: #0000ff; /*changed by #8f7ee6 to #0000ff aka .blue*/
+  background-color: #0000ff;
   color: white;
 }
 
@@ -124,7 +123,7 @@ form button {
   margin: 2rem auto 0;
   border-radius: 5px;
   width: 90%;
-  background-color: #d9dbde; /*changed*/
+  background-color: #d9dbde;
   max-height: 1200px;
 }
 .footer {
@@ -148,33 +147,31 @@ form button {
 
 .orange {
   background-color: #ff9f1a;
-  font-family: Papyrus; /*without*/
+  font-family: Papyrus;
 }
 
 .yellow {
   background-color: #ffd500;
-  font-family: Papyrus; /*without*/
+  font-family: Papyrus; 
 }
-
 .green {
   background-color: #8acc47;
   color: white;
-  font-family: Papyrus; /*without*/
+  font-family: Papyrus; 
 }
 
 .red {
   background-color: #d93651;
   color: white;
-  font-family: Papyrus; /*without*/
+  font-family: Papyrus;
 }
 
 .blue {
   background-color: #0000ff;
   color: white;
-  font-family: Papyrus; /*without*/
+  font-family: Papyrus; 
 }
 
-/*new*/
 .purple {
   background-color: #8f7ee6;
   color: white;
@@ -220,19 +217,19 @@ footer {
 }
 
 button.change-theme {
-  width: 85%; /*From 90%*/
+  width: 85%;
   font-weight: bold;
-  border: 2px solid black; /*From 0*/
+  border: 2px solid black;
   margin: auto;
   margin-left: 20px;
   font-family: Papyrus;
 }
 
 button.change-theme:hover {
-  background-color: black; /*From red*/
-  font-weight: bold; /*Added*/
-  border: 3px inset white; /*From dotted and white*/
-  color: white; /*From yellow*/
+  background-color: black;
+  font-weight: bold;
+  border: 3px inset white; 
+  color: white; 
   font-family: Papyrus;
 }
 

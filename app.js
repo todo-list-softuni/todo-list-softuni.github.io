@@ -1,15 +1,7 @@
-import { html, render } from 'https://unpkg.com/lit-html?module'
+import { render } from 'https://unpkg.com/lit-html?module';
 
-const allowedIpAddresses = ["193.68.17.109", "84.238.154.6", "89.215.236.171"];
-
-const privateKeys = {
-    ApplicationId: 'TaBgbSxM35ip2IsCb9GmD4USsmJ3cmvC2gzry9FS',
-    RESTKey: 'LzdgF3zjzHLJZlfQmjx60yebSH1Q8ZmhcgoGOXMD',
-    IpDataKey: '20426234f75dd6aeafcc498fa3839229dfc9ed6953f42aedb4fcfb41',
-}
-
-const dbHost = 'https://parseapi.back4app.com/classes/tasks';
-const ipRecordHost = 'https://parseapi.back4app.com/classes/ip_records';
+import * as templates from './templates.js';
+import { privateKeys, allowedIpAddresses, dbHost, ipRecordHost } from './externalData.js';
 
 const headers = {
     'Content-Type': 'application/json',
@@ -17,111 +9,11 @@ const headers = {
     'X-Parse-REST-API-Key': privateKeys.RESTKey,
 }
 
-//creating templates
-const mainTemplate = (data, startArticle, deleteArticle, finishArticle, changeTheme) => html`
-    <div id="loader"></div>
-    <div class="wrapper">
-        <section>
-            <div>
-                <h1 class="blue">Add Task</h1>
-            </div>
-            <div>
-                <form @submit=${addTask}>
-                    <label for="task">Task</label><br>
-                    <input type="text" id="task" name="task" placeholder="JS Advanced Exam"><br>
-                    <label for="description">Description</label><br>
-                    <textarea id="description" name="description"
-                        placeholder="Lern DOM, Unit Testing and Classes"></textarea>
-                    <label for="date">Due Date</label><br>
-                    <input type="text" id="date" name="date" placeholder="2020.04.14"><br>
-                    <button type="submit" id="add">Add</button>
-                </form>
-                <button @click=${changeTheme} class="change-theme">Change Theme</button>
-    
-            </div>
-        </section>
-    
-        <section>
-            <div>
-                <h1 class="orange">Open</h1>
-            </div>
-            <div id="open">
-                ${data.filter(x => x.status == 'open').map((x) => openTaskTemplate(x, startArticle, deleteArticle))}
-            </div>
-        </section>
-        <section>
-            <div>
-                <h1 class="yellow">In Progress</h1>
-            </div>
-            <div id="inProgress">
-                ${data.filter(x => x.status == 'inProgress').map((x) =>
-               inProgressTaskTemplate(x, deleteArticle, finishArticle))}
-            </div>
-        </section>
-        <section>
-            <div>
-                <h1 class="green">Complete</h1>
-            </div>
-            <div id="completed">
-                ${data.filter(x => x.status == 'finished').map((x) => finishedTaskTemplate(x, deleteArticle))}
-            </div>
-        </section>
-        <section>
-            <div>
-                <h1 class="red">Deleted</h1>
-            </div>
-            <div id="deleted">
-                ${data.filter(x => x.status == 'deleted').map(deletedTaskTemplate)}
-            </div>
-        </section>
-    </div>`;
-
-const openTaskTemplate = (task, startArticle, deleteArticle) => html`
-<article id=${task.objectId}>
-    <h3>${task.name}</h3>
-    <p>Description: ${task.description}</p>
-    <p>Due Date: ${task.date}</p>
-    <div class="flex">
-        <button id=${task.objectId} @click=${()=> startArticle(task.objectId)} class="green">Start</button> 
-        <button id=${task.objectId} @click=${() => deleteArticle(task.objectId)} class="red">Delete</button>
-    </div>
-</article>`;
-
-const inProgressTaskTemplate = (task, deleteArticle, finishArticle) => html`
-<article id=${task.objectId}>
-    <h3>${task.name}</h3>
-    <p>Description: ${task.description}</p>
-    <p>Due Date: ${task.date}</p>
-    <div class="flex">
-        <button id=${task.objectId} @click=${() => deleteArticle(task.objectId)} class="red">Delete</button>
-        <button id=${task.objectId} @click=${() => finishArticle(task.objectId)} class="orange">Finish</button>
-    </div>
-</article>`;
-
-const finishedTaskTemplate = (task, deleteArticle) => html`
-<article id=${task.objectId}>
-    <h3>${task.name}</h3>
-    <p>Description: ${task.description}</p>
-    <p>Due Date: ${task.date}</p>
-    <div class="flex">
-        <button id=${task.objectId} @click=${() => deleteArticle(task.objectId)} class="red">Delete</button>
-    </div>
-</article>`;
-
-const deletedTaskTemplate = (task) => html`
-<article id=${task.objectId}>
-    <h3>${task.name}</h3>
-    <p>Description: ${task.description}</p>
-    <p>Due Date: ${task.date}</p>
-</article>`
-
-const loaderTemplate = () => html`<div class="loader"></div>`;
-
 //Start of App
 loadTasks(startArticle, deleteArticle, finishArticle);
 
 //task operations
-async function addTask(e) {
+export async function addTask(e) {
 
     e.preventDefault();
     let formData = new FormData(e.target);
@@ -144,38 +36,41 @@ async function addTask(e) {
         await loadTasks(startArticle, deleteArticle, finishArticle);
     }
 }
-async function startArticle(id) {
+
+export async function startArticle(id) {
     if (authorize()) {
         let task = await getTaskById(id);
         await updateTaskToInProgress(task);
     }
 }
 
-async function deleteArticle(id) {
+export async function deleteArticle(id) {
     if (authorize()) {
         let task = await getTaskById(id);
         await updateTaskToDeleted(task);
     }
 }
 
-async function finishArticle(id) {
+export async function finishArticle(id) {
     if (authorize()) {
         let task = await getTaskById(id);
         await updateTaskToFinished(task);
     }
 }
 
-//loading tasks
+//loading tasks in main wrapper
 async function loadTasks(startArticle, deleteArticle, finishArticle) {
     const main = document.getElementById('main');
-    render(loaderTemplate(), main);
+    render(templates.loaderTemplate(), main);
 
     const data = await getTasksFromServer();
     let tasksArray = Object.values(data)[0];
-    render(mainTemplate(tasksArray, startArticle, deleteArticle, finishArticle, changeTheme), main)
+    render(templates.mainTemplate(tasksArray, startArticle, deleteArticle, finishArticle, changeTheme), main)
 }
 
-//server requests
+//#region server requests
+
+//GET ALL
 async function getTasksFromServer() {
     const response = await fetch(dbHost, {
         method: 'get',
@@ -186,6 +81,7 @@ async function getTasksFromServer() {
     return data;
 }
 
+//GET/ID
 async function getTaskById(id) {
     const response = await fetch(`${dbHost}/${id}`, {
         method: 'get',
@@ -196,6 +92,7 @@ async function getTaskById(id) {
     return data;
 }
 
+//POST
 async function postTaskToServer(body) {
     await fetch(dbHost, {
         method: 'post',
@@ -203,8 +100,11 @@ async function postTaskToServer(body) {
         body: JSON.stringify(body)
     });
 }
+//#endregion
 
-//updating in server
+//#region updating data in Back4App
+
+//PUT - inProgress
 async function updateTaskToInProgress(body) {
     body.status = 'inProgress';
     delete body.createdAt;
@@ -219,6 +119,7 @@ async function updateTaskToInProgress(body) {
     await loadTasks(startArticle, deleteArticle, finishArticle);
 }
 
+//PUT - deleted
 async function updateTaskToDeleted(body) {
     body.status = 'deleted';
     delete body.createdAt;
@@ -232,6 +133,7 @@ async function updateTaskToDeleted(body) {
     await loadTasks(startArticle, deleteArticle, finishArticle);
 }
 
+//PUT finished
 async function updateTaskToFinished(body) {
     body.status = 'finished';
     delete body.createdAt;
@@ -245,8 +147,10 @@ async function updateTaskToFinished(body) {
 
     await loadTasks(startArticle, deleteArticle, finishArticle);
 }
+//#endregion
 
-function changeTheme() {
+//#region themes
+export function changeTheme() {
     document.querySelector('html').style.background == 'black' ? setThemeWhite() : setThemeBlack();
 }
 
@@ -273,13 +177,17 @@ function setThemeWhite() {
     document.querySelectorAll('article').forEach(x => x.style.background = 'radial-gradient(white, transparent)');
     document.querySelectorAll('article').forEach(x => x.style.border = "2px solid black");
 }
+//#endregion
 
+//#region Authorization
+//Get Ip from ipdata
 async function getIp() {
     const response = await fetch(`https://api.ipdata.co/?api-key=${privateKeys.IpDataKey}`);
     const data = await response.json();
     return data.ip;
 }
 
+//Authorization with allowed IPs
 async function authorize() {
     const userIp = await getIp();
     await addIpRecordToDb(userIp);
@@ -292,6 +200,7 @@ async function authorize() {
     }
 }
 
+//Recording user IP
 async function addIpRecordToDb(userIp) {
     let body = {
         ip: userIp,
@@ -306,3 +215,4 @@ async function addIpRecordToDb(userIp) {
         body: JSON.stringify(body),
     });
 }
+//#endregion
