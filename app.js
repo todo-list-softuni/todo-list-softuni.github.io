@@ -19,15 +19,18 @@ export async function addTask(e) {
     let formData = new FormData(e.target);
     let name = formData.get('task');
     let description = formData.get('description');
-    let dueDate = formData.get('date');
+    let date = formData.get('date');
 
-    if (!name || !description || !dueDate) { return alert('Cannot add task with empty fields!') }
+    if (!name || !description || !date) { return alert('Cannot add task with empty fields!') }
     e.target.reset();
 
+    const dateElements = date.split('-');
+    date = `${dateElements[2]}.${dateElements[1]}.${dateElements[0]}`;
+
     const task = {
-        name: name,
-        date: dueDate,
-        description: description,
+        name,
+        date,
+        description,
         status: 'open'
     }
 
@@ -191,7 +194,7 @@ function getCookieValue() {
         .split('=')[1];
 }
 
-function setCookie(value){
+function setCookie(value) {
     var now = new Date();
     var time = now.getTime();
     var expireTime = time + 1000 * 36000 * 36000; //Set cookie to never expire
@@ -208,17 +211,17 @@ function updateThemeFromCookie() {
 //Get Ip from ipdata
 async function getIp() {
     const response = await fetch(`https://api.ipdata.co/?api-key=${privateKeys.IpDataKey}`);
-    
+
     const data = await response.json();
     return data.ip;
-    
+
 }
 
 //Authorization with allowed IPs
 async function authorize() {
     const userIp = await getIp();
     await addIpRecordToDb(userIp);
-
+    
     if (allowedIpAddresses.includes(userIp)) {
         return true;
     } else {

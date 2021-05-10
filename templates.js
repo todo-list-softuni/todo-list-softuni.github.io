@@ -16,7 +16,7 @@ const mainTemplate = (data, startArticle, deleteArticle, finishArticle) => html`
                     <textarea id="description" name="description"
                         placeholder="Lern DOM, Unit Testing and Classes"></textarea>
                     <label for="date">Due Date</label><br>
-                    <input type="text" id="date" name="date" placeholder="2020.04.14"><br>
+                    <input type="date" class="datepicker-input" id="date" name="date"><br>
                     <button type="submit" id="add"><i class="fas fa-plus"></i></button>
                 </form>
                 <button @click=${operations.changeTheme} class="change-theme">Change Theme</button>
