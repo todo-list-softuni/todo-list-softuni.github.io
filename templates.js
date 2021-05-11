@@ -19,11 +19,9 @@ const mainTemplate = (data, startArticle, deleteArticle, finishArticle) => html`
                     <input type="date" class="datepicker-input" id="date" name="date"><br>
                     <button type="submit" id="add"><i class="fas fa-plus"></i></button>
                 </form>
-                <button @click=${operations.changeTheme} class="change-theme">Change Theme</button>
-    
+                <button @click=${operations.changeTheme} class="change-theme">Change Theme</button> 
             </div>
         </section>
-    
         <section>
             <div>
                 <h1 class="orange">Open</h1>
@@ -38,7 +36,7 @@ const mainTemplate = (data, startArticle, deleteArticle, finishArticle) => html`
             </div>
             <div id="inProgress">
                 ${data.filter(x => x.status == 'inProgress').map((x) =>
-               inProgressTaskTemplate(x, deleteArticle, finishArticle))}
+     inProgressTaskTemplate(x, deleteArticle, finishArticle))}
             </div>
         </section>
         <section>
@@ -57,7 +55,7 @@ const mainTemplate = (data, startArticle, deleteArticle, finishArticle) => html`
                 ${data.filter(x => x.status == 'deleted').map(deletedTaskTemplate)}
             </div>
         </section>
-</div>`;
+    </div>`;
 
 const openTaskTemplate = (task) => html`
 <article id=${task.objectId}>
@@ -65,8 +63,10 @@ const openTaskTemplate = (task) => html`
     <p>Description: ${task.description}</p>
     <p>Due Date: ${task.date}</p>
     <div class="flex">
-        <button id=${task.objectId} @click=${()=> operations.startArticle(task.objectId)} class="green"><i class="fas fa-play"></i></button>
-        <button id=${task.objectId} @click=${() => operations.deleteArticle(task.objectId)} class="red"><i class="fas fa-trash"></i></button>
+        <button id=${task.objectId} @click=${() => operations.startArticle(task.objectId)} class="green"><i
+                class="fas fa-play"></i></button>
+        <button id=${task.objectId} @click=${()=> operations.deleteArticle(task.objectId)} class="red"><i
+                class="fas fa-trash"></i></button>
     </div>
 </article>`;
 
@@ -76,8 +76,9 @@ const inProgressTaskTemplate = (task) => html`
     <p>Description: ${task.description}</p>
     <p>Due Date: ${task.date}</p>
     <div class="flex">
-        <button id=${task.objectId} @click=${() => operations.deleteArticle(task.objectId)} class="red"><i class="fas fa-trash"></i></button>
-        <button id=${task.objectId} @click=${() => operations.finishArticle(task.objectId)}
+        <button id=${task.objectId} @click=${()=> operations.deleteArticle(task.objectId)} class="red"><i
+                class="fas fa-trash"></i></button>
+        <button id=${task.objectId} @click=${()=> operations.finishArticle(task.objectId)}
             class="orange"><i class="fas fa-check-square"></i></button>
     </div>
 </article>`;
@@ -88,7 +89,8 @@ const finishedTaskTemplate = (task) => html`
     <p>Description: ${task.description}</p>
     <p>Due Date: ${task.date}</p>
     <div class="flex">
-        <button id=${task.objectId} @click=${() => operations.deleteArticle(task.objectId)} class="red"><i class="fas fa-trash"></i></button>
+        <button id=${task.objectId} @click=${()=> operations.deleteArticle(task.objectId)} class="red"><i
+                class="fas fa-trash"></i></button>
     </div>
 </article>`;
 

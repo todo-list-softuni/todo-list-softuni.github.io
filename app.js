@@ -163,6 +163,7 @@ function setThemeBlack() {
     setCookie('black');
 
     document.querySelector('html').style.background = 'black';
+    document.querySelector('body').style.background = 'black';
     document.querySelector('div.wrapper').style.background = '#183452';
     document.querySelector('footer').style.background = '#183452';
     document.querySelector('.footer a').style.color = 'white';
@@ -177,6 +178,7 @@ function setThemeWhite() {
     setCookie('white');
 
     document.querySelector('html').style.background = 'white';
+    document.querySelector('body').style.background = 'white';
     document.querySelector('div.wrapper').style.background = '#d9dbde';
     document.querySelector('footer').style.background = '#d9dbde';
     document.querySelector('.footer a').style.color = 'black';
