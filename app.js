@@ -61,13 +61,21 @@ export async function finishArticle(id) {
     }
 }
 
+export async function editArticle(id) {
+    if (await authorize()) {
+        let task = await getTaskById(id);
+        await editTask(task);
+    }
+}
 //loading tasks in main wrapper
 async function loadTasks(startArticle, deleteArticle, finishArticle) {
     const main = document.getElementById('main');
     render(templates.loaderTemplate(), main);
 
     const data = await getTasksFromServer();
-    let tasksArray = Object.values(data)[0];
+    let tasksArray = [...Object.values(data)[0]];
+    tasksArray.sort((x, y) => x.date.localeCompare(y.date));
+
     render(templates.mainTemplate(tasksArray, startArticle, deleteArticle, finishArticle, changeTheme), main)
 
     updateThemeFromCookie();
@@ -136,6 +144,11 @@ async function updateTaskToDeleted(body) {
     });
 
     await loadTasks(startArticle, deleteArticle, finishArticle);
+}
+
+//PUT editTask
+async function editTask(body) {
+    alert('edit');
 }
 
 //PUT finished

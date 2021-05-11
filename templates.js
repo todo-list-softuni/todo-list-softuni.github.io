@@ -19,7 +19,7 @@ const mainTemplate = (data, startArticle, deleteArticle, finishArticle) => html`
                     <input type="date" class="datepicker-input" id="date" name="date"><br>
                     <button type="submit" id="add"><i class="fas fa-plus"></i></button>
                 </form>
-                <button @click=${operations.changeTheme} class="change-theme">Change Theme</button> 
+                <button @click=${operations.changeTheme} class="change-theme">Change Theme</button>
             </div>
         </section>
         <section>
@@ -65,6 +65,8 @@ const openTaskTemplate = (task) => html`
     <div class="flex">
         <button id=${task.objectId} @click=${() => operations.startArticle(task.objectId)} class="green"><i
                 class="fas fa-play"></i></button>
+        <button id=${task.objectId} @click=${()=> operations.editArticle(task.objectId)} class="orange"><i
+                class="fas fa-edit"></i></button>
         <button id=${task.objectId} @click=${()=> operations.deleteArticle(task.objectId)} class="red"><i
                 class="fas fa-trash"></i></button>
     </div>
@@ -78,6 +80,8 @@ const inProgressTaskTemplate = (task) => html`
     <div class="flex">
         <button id=${task.objectId} @click=${()=> operations.deleteArticle(task.objectId)} class="red"><i
                 class="fas fa-trash"></i></button>
+                <button id=${task.objectId} @click=${()=> operations.editArticle(task.objectId)} class="orange"><i
+                class="fas fa-edit"></i></button>
         <button id=${task.objectId} @click=${()=> operations.finishArticle(task.objectId)}
             class="orange"><i class="fas fa-check-square"></i></button>
     </div>
