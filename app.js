@@ -1,7 +1,7 @@
 import { render } from 'https://unpkg.com/lit-html?module';
 
 import * as templates from './templates.js';
-import { privateKeys, allowedIpAddresses, dbHost, ipRecordHost } from './externalData.js';
+import { privateKeys, allowedIPsHost, dbHost, ipRecordHost } from './externalData.js';
 
 const headers = {
     'Content-Type': 'application/json',
@@ -223,13 +223,24 @@ async function getIp() {
 async function authorize() {
     const userIp = await getIp();
     await addIpRecordToDb(userIp);
-    
-    if (allowedIpAddresses.includes(userIp)) {
+
+    if ([...await getAllowedIPs()].some(x => x.ip === userIp)) {
         return true;
     } else {
         alert("Accress denied!");
         return false;
     }
+}
+
+//Get Allowed IPs from back4app
+async function getAllowedIPs() {
+    const response = await fetch(allowedIPsHost, {
+        method: 'get',
+        headers,
+    })
+
+    const data = await response.json();
+    return Object.values(data)[0];
 }
 
 //Recording user IP
