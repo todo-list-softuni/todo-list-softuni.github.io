@@ -1,7 +1,7 @@
 import { render } from 'https://unpkg.com/lit-html?module';
 
 import * as templates from './templates.js';
-import { privateKeys, allowedIpAddresses, dbHost, ipRecordHost } from './externalData.js';
+import { privateKeys, allowedIPsHost, dbHost, ipRecordHost } from './externalData.js';
 
 const headers = {
     'Content-Type': 'application/json',
@@ -61,13 +61,21 @@ export async function finishArticle(id) {
     }
 }
 
+export async function editArticle(id) {
+    if (await authorize()) {
+        let task = await getTaskById(id);
+        await editTask(task);
+    }
+}
 //loading tasks in main wrapper
 async function loadTasks(startArticle, deleteArticle, finishArticle) {
     const main = document.getElementById('main');
     render(templates.loaderTemplate(), main);
 
     const data = await getTasksFromServer();
-    let tasksArray = Object.values(data)[0];
+    let tasksArray = [...Object.values(data)[0]];
+    tasksArray.sort((x, y) => x.date.localeCompare(y.date));
+
     render(templates.mainTemplate(tasksArray, startArticle, deleteArticle, finishArticle, changeTheme), main)
 
     updateThemeFromCookie();
@@ -138,6 +146,11 @@ async function updateTaskToDeleted(body) {
     await loadTasks(startArticle, deleteArticle, finishArticle);
 }
 
+//PUT editTask
+async function editTask(body) {
+    alert('edit');
+}
+
 //PUT finished
 async function updateTaskToFinished(body) {
     body.status = 'finished';
@@ -163,6 +176,7 @@ function setThemeBlack() {
     setCookie('black');
 
     document.querySelector('html').style.background = 'black';
+    document.querySelector('body').style.background = 'black';
     document.querySelector('div.wrapper').style.background = '#183452';
     document.querySelector('footer').style.background = '#183452';
     document.querySelector('.footer a').style.color = 'white';
@@ -177,6 +191,7 @@ function setThemeWhite() {
     setCookie('white');
 
     document.querySelector('html').style.background = 'white';
+    document.querySelector('body').style.background = 'white';
     document.querySelector('div.wrapper').style.background = '#d9dbde';
     document.querySelector('footer').style.background = '#d9dbde';
     document.querySelector('.footer a').style.color = 'black';
@@ -221,13 +236,24 @@ async function getIp() {
 async function authorize() {
     const userIp = await getIp();
     await addIpRecordToDb(userIp);
-    
-    if (allowedIpAddresses.includes(userIp)) {
+
+    if ([...await getAllowedIPs()].some(x => x.ip === userIp)) {
         return true;
     } else {
         alert("Accress denied!");
         return false;
     }
+}
+
+//Get Allowed IPs from back4app
+async function getAllowedIPs() {
+    const response = await fetch(allowedIPsHost, {
+        method: 'get',
+        headers,
+    })
+
+    const data = await response.json();
+    return Object.values(data)[0];
 }
 
 //Recording user IP
