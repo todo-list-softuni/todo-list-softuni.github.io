@@ -7,4 +7,4 @@ export const privateKeys = {
 export const dbHost = 'https://parseapi.back4app.com/classes/tasks';
 export const ipRecordHost = 'https://parseapi.back4app.com/classes/ip_records';
 
-export const allowedIpAddresses = ["193.68.17.109", "84.238.154.6", "89.215.236.171", "109.120.221.29"];
+export const allowedIpAddresses = ["193.68.17.109", "84.238.154.6", "89.215.236.171", "109.120.221.157"];
